@@ -30,13 +30,25 @@ app.get('/', (req,res)=>{
 })
 
 app.post('/', (req,res)=>{
-    const {name,email,phone} =req.body;
-    const user = new User({name,email,phone});
+    //const {name,email,phone} =req.body;
+    const user = new User({...req.body});
+    ///const user = new User({name,email,phone});
     user.save().then((data)=>{
         res.status(200).json({data});
 
     }).catch((err)=>{
         req.status(500).json({err});
+    })
+})
+
+app.delete('/:id', (req,res)=>{
+    let userId = req.params.id
+    //console.log(userId)
+    //res.send(userId);
+    User.findByIdAndDelete(userId).then((data)=>{
+        res.status(200).json({data});
+    }).catch((err)=>{
+        res.status(500).json({err});
     })
 })
 
