@@ -1,3 +1,4 @@
+
 function getUser(){
     fetch("http://localhost:8080").then((res)=>{
         return res.json();
@@ -39,6 +40,20 @@ function deleteData(id){
     }
 }
 
+function updateData(id){
+document.getElementById('criteria').value = id;
+document.getElementById('addRecord').innerHTML="updated data"
+fetch(`http://localhost:8080/${id}`).then((res)=>{
+    return res.json();
+
+}).then((user)=>{
+    document.getElementById('name').value = user.data.name;
+    document.getElementById('email').value = user.data.email;
+    document.getElementById('phone').value = user.data.phone;
+}).catch((e)=>{
+    console.log(e);
+})
+}
 document.querySelector("#addRecord").addEventListener('click',function(e){
     e.preventDefault();
     let name = document.getElementById("name").value;

@@ -29,6 +29,20 @@ app.get('/', (req,res)=>{
     });
 })
 
+app.get('/id', (req,res)=>{
+    let id = req.params.id;
+    User.findById(id).then((data) => {
+        res.status(200).json({data});
+    }).catch((e)=> {
+        console.log(e);
+})
+});
+
+app.put('/:id', async(req,res)=>{
+    let userId= req.params.id
+    await User.findByIdAndUpdate(userId,{...req.body})
+    res.send("success")
+})  ;
 app.post('/', (req,res)=>{
     //const {name,email,phone} =req.body;
     const user = new User({...req.body});
@@ -52,6 +66,9 @@ app.delete('/:id', (req,res)=>{
     })
 })
 
-app.listen(8080, ()=> {
-    console.log("server running at 8080")
+app.listen(8080, ()=>{
+    console.log("server running at 8080");
 })
+// app.listen(8080, ()=> {
+//     console.log("server running at 8080");
+// })
